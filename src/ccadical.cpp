@@ -18,6 +18,7 @@ using namespace CaDiCaL;
 extern "C" {
 
 #include "ccadical.h"
+#include "csolver.h"
 
 const char * ccadical_signature (void) {
   return Solver::signature ();
@@ -110,4 +111,105 @@ int ccadical_frozen (CCaDiCaL * ptr, int lit) {
   return ((Wrapper*) ptr)->solver->frozen (lit);
 }
 
+CSolver *
+csolver_init(){
+  	return (CSolver*) new Wrapper ();
+}
+
+void
+csolver_release(CSolver * s){
+	delete (Wrapper *) s;
+}
+
+int
+csolver_solve(CSolver * s){
+	switch(((Wrapper*) s)->solver->solve()){
+		case(10):	return 1;
+		case(20):	return 0;
+		default:	return -1;
+	}
+}
+
+void
+csolver_clause(CSolver * s, int nLits, ...){
+	Wrapper * w = (Wrapper *) s;
+	int lit;
+
+	va_list args;
+	va_start(args, nLits);
+
+	for(int i = 0; i < nLits; ++i){
+		if(!(lit = va_arg(args, int))){
+#ifdef LOGGING
+			fprintf(stderr, "WARNING: clause terminated before end of args reached\n");
+#endif
+		}
+		w->solver->add(lit);
+	}
+
+	w->solver->add(0);
+
+	va_end(args);
+}
+
+void
+csolver_clausezt(CSolver * s, ...){
+	Wrapper * w = (Wrapper *) s;
+	int lit;
+
+	va_list args;
+	va_start(args, s);
+
+	while((lit = va_arg(args, int)) != 0){
+		w->solver->add(lit);
+		ccadical_add((CCaDiCaL *) s, lit);
+	}
+
+	w->solver->add(0);
+
+	va_end(args);
+}
+
+void
+csolver_aclause(CSolver * s, int nLits, int * lits){
+	Wrapper * w = (Wrapper *) s;
+	for(int i = 0; i < nLits; ++i){
+		if(!lits[i]){
+#ifdef LOGGING
+			fprintf(stderr, "WARNING: clause terminated before end of args reached\n");
+#endif
+		}
+		w->solver->add(lits[i]);
+	}
+
+	w->solver->add(0);
+
+}
+void
+csolver_aclausezt(CSolver * s, int * lits){
+	Wrapper * w = (Wrapper *) s;
+	while(*lits != 0){
+		w->solver->add(*lits++);
+	}
+
+	w->solver->add(0);
+}
+
+int
+csolver_val(CSolver * s, int lit){
+	return ((Wrapper*) s)->solver->val(lit);
+}
+
+const struct clibrary LibCSolver = {
+	.init =			csolver_init,
+	.release =		csolver_release,
+	.solve =		csolver_solve,
+
+	.clause = 		csolver_clause,
+	.clausezt =		csolver_clausezt,
+	.aclause =		csolver_aclause,
+	.aclausezt =	csolver_aclausezt,
+
+	.val =			csolver_val
+};
 }

@@ -23,7 +23,7 @@ profile=no
 unlocked=yes
 pedantic=no
 options=""
-quiet=no
+quiet=yes
 m32=no
 
 #--------------------------------------------------------------------------#
