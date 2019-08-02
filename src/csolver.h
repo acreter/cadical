@@ -11,6 +11,7 @@ typedef struct CSolver CSolver;
 
 struct clibrary{
 	CSolver *	(*init)(void);
+	CSolver *	(*reset)(CSolver *);
 	void 		(*release)(CSolver *);
 	int			(*solve)(CSolver *);
 
@@ -25,6 +26,7 @@ struct clibrary{
 extern const struct clibrary LibCSolver;
 
 CSolver * csolver_init(void);
+CSolver * csolver_reset(CSolver *);
 void csolver_release(CSolver *);
 int csolver_solve(CSolver *);
 

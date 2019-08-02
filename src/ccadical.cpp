@@ -116,6 +116,12 @@ csolver_init(){
   	return (CSolver*) new Wrapper ();
 }
 
+CSolver *
+csolver_reset(CSolver * s){
+	delete (Wrapper *) s;
+  	return (CSolver*) new Wrapper ();
+}
+
 void
 csolver_release(CSolver * s){
 	delete (Wrapper *) s;
@@ -202,6 +208,7 @@ csolver_val(CSolver * s, int lit){
 
 const struct clibrary LibCSolver = {
 	.init =			csolver_init,
+	.reset =		csolver_reset,
 	.release =		csolver_release,
 	.solve =		csolver_solve,
 
