@@ -189,8 +189,8 @@ csolver_aclause(CSolver * s, int nLits, int * lits){
 	}
 
 	w->solver->add(0);
-
 }
+
 void
 csolver_aclausezt(CSolver * s, int * lits){
 	Wrapper * w = (Wrapper *) s;
