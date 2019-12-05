@@ -1,5 +1,5 @@
-#ifndef _csolver_h_INCLUDED
-#define _csolver_h_INCLUDED
+#ifndef CSOLVER_H_INCLUDED
+#define CSOLVER_H_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,8 +10,8 @@ extern "C" {
 typedef struct CSolver CSolver;
 
 struct clibrary{
-	CSolver *	(*init)(void);
-	CSolver *	(*reset)(CSolver *);
+	int			(*init)(CSolver *);
+	int			(*reset)(CSolver *);
 	void 		(*release)(CSolver *);
 	int			(*solve)(CSolver *);
 
@@ -25,8 +25,8 @@ struct clibrary{
 
 extern const struct clibrary LibCSolver;
 
-CSolver * csolver_init(void);
-CSolver * csolver_reset(CSolver *);
+int csolver_init(CSolver *);
+int csolver_reset(CSolver *);
 void csolver_release(CSolver *);
 int csolver_solve(CSolver *);
 

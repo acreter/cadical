@@ -111,15 +111,16 @@ int ccadical_frozen (CCaDiCaL * ptr, int lit) {
   return ((Wrapper*) ptr)->solver->frozen (lit);
 }
 
-CSolver *
-csolver_init(){
-  	return (CSolver*) new Wrapper ();
+int
+csolver_init(CSolver * s){
+  	s = (CSolver*) new Wrapper ();
+	return 1;
 }
 
-CSolver *
+int
 csolver_reset(CSolver * s){
 	delete (Wrapper *) s;
-  	return (CSolver*) new Wrapper ();
+  	return csolver_init(s);
 }
 
 void
