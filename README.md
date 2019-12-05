@@ -1,5 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.com/acreter/cadical.svg?branch=master)](https://travis-ci.com/acreter/cadical)
+[![Build Status](https://travis-ci.org/acreter/cadical.svg?branch=master)](https://travis-ci.org/acreter/cadical)
 
 
 CaDiCaL Simplified Satisfiability Solver
