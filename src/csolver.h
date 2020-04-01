@@ -10,8 +10,8 @@ extern "C" {
 typedef struct CSolver CSolver;
 
 struct clibrary{
-	int			(*init)(CSolver *);
-	int			(*reset)(CSolver *);
+	CSolver *	(*init)();
+	CSolver *	(*reset)(CSolver *);
 	void 		(*release)(CSolver *);
 	int			(*solve)(CSolver *);
 
@@ -25,8 +25,8 @@ struct clibrary{
 
 extern const struct clibrary LibCSolver;
 
-int csolver_init(CSolver *);
-int csolver_reset(CSolver *);
+CSolver * csolver_init();
+CSolver * csolver_reset(CSolver *);
 void csolver_release(CSolver *);
 int csolver_solve(CSolver *);
 
